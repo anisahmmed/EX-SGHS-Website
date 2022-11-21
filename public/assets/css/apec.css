@@ -1,0 +1,110 @@
+
+.card-item {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(72, 94, 144, 0.03);
+  box-shadow: 0 0 10px rgb(28 39 60 / 5%);
+  border-radius: 0.25rem; }
+  .card-item > hr {
+    margin-right: 0;
+    margin-left: 0; }
+  .card-item > .list-group:first-child .list-group-item:first-child {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem; }
+  .card-item > .list-group:last-child .list-group-item:last-child {
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem; }
+    
+    
+.shadow-light {
+  box-shadow: 0 0 10px rgb(28 39 60 / 20%);
+}
+
+.wd-120 {
+    width:120px;
+}
+
+.tx-45 {
+    font-size:45px;
+}
+
+.tx-35 {
+    font-size:35px;
+}
+
+.bg-light-blue {
+    background-color: #f6f8ff !important;
+}
+
+
+#members th, td {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+
+#members-blood-group th, td {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+
+.table.profile-table th, .table.profile-table td {
+  padding: 5px 8px;
+  vertical-align: middle;
+  border-bottom: 1px solid rgb(226 227 229 / 16%);
+  border-top:none;
+}
+
+.Titumir-bg-light {
+  background-color: rgb(249, 255, 248);
+}
+
+.Titumir-bg {
+  background-color: rgb(49, 156, 25);
+}
+
+.Bhashani-bg-light {
+  background-color: rgb(247, 250, 255);
+}
+
+.Bhashani-bg {
+  background-color: rgb(17, 118, 200);
+}
+
+.Shiraji-bg-light {
+  background-color: rgb(255, 247, 247);
+}
+
+.Shiraji-bg {
+  background-color: rgb(215, 50, 50);
+}
+
+
+.my-account-header {
+
+  padding-left:15px;
+  padding-top: 3px;
+  padding-right: 15px;
+  padding-bottom: 2px;
+  z-index:9;
+
+}
+
+
+@media (min-width: 768px) {
+  .my-account-header {
+
+    margin-left:-200px;
+    padding-left:215px;
+    padding-top: 3px;
+    padding-right: 15px;
+    padding-bottom: 2px;
+    z-index:9;
+
+  }
+}
