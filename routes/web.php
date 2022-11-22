@@ -22,6 +22,8 @@ Route::get('/', function () {
 
 //Terms and policy view
 Route::get('/terms-and-policy', [PublicController::class, 'terms_policy'])->name('terms_policy');
+//News/Announcement view
+Route::get('/news-announcement', [PublicController::class, 'news_announcement'])->name('news_announcement');
 
 //Admin dashboard view
 Route::get('/Dashboard', [AdminController::class, 'admin_dashboard'])->name('admin_dashboard');
@@ -39,6 +41,18 @@ Route::post('/banner/update', [AdminController::class, 'banner_update'])->name('
 //delete banner
 Route::get('/banner/delete/{id}', [AdminController::class, 'banner_delete'])->name('banner_delete');
 
+//Announcement form view
+Route::get('/announcements-input', [AdminController::class, 'announcement_input_form'])->name('announcement_input_form');
+//announcement insert
+Route::post('/announcement-insert', [AdminController::class, 'announcement_insert'])->name('announcement_insert');
+//all announcements view
+Route::get('/announcements', [AdminController::class, 'announcements'])->name('announcements');
+//Announcement Edit
+Route::get('/announcement-edit/{id}', [AdminController::class, 'announcement_edit'])->name('announcement_edit');
+//update announcement
+Route::post('/announcement-update', [AdminController::class, 'announcement_update'])->name('announcement_update');
+//Announcement Delete
+Route::get('/announcement-delete/{id}', [AdminController::class, 'announcement_delete'])->name('announcement_delete');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

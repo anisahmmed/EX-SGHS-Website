@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Banner;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -80,7 +81,91 @@ class AdminController extends Controller
     //Banner Delete
     public function banner_delete($id)
     {
-        Banner::findOrFail($id)->delete();
+        $single_banner = Banner::findOrFail($id);
+        $destinaiton = 'Uploads/Banner/'. $single_banner->banner_image;
+            if(File::exists($destinaiton)){
+                File::delete($destinaiton);
+            }
+        $single_banner->delete();
+
         return redirect(route('banners'))->with('status', 'Banner Deleted!');
+    }
+
+    //news announcement input form view
+    public function announcement_input_form()
+    {
+        return view('Admin.announcement.input');
+    }
+    //announcement insert
+    public function announcement_insert(Request $request)
+    {
+        $request->validate([
+            'announcement_title' => 'required',
+            'announcement_description' => 'required',
+            'announcement_image' => 'required|image|max:300',
+        ]);
+        $announcements = new Announcement;
+        $announcements->announcement_title = $request->announcement_title;
+        $announcements->announcement_description =$request->announcement_description;
+
+        if($request->hasfile('announcement_image')){
+            $file = $request->file('announcement_image');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('Uploads/Announcement/', $filename);
+            $announcements->announcement_image = $filename;
+        }
+        $announcements->save();
+        return back()->with('status', 'New News/Announcement added!');
+    }
+    //All announcements view
+    public function announcements()
+    {
+        $all_announcements = Announcement::all();
+        return view('Admin.announcement.all_announcements', compact('all_announcements'));
+    }
+    //announcement edit
+    public function announcement_edit($id)
+    {
+        $single_announcement = Announcement::findOrFail($id);
+        return view('Admin.announcement.announcement_edit', compact('single_announcement'));
+    }
+    //Announcement Uodate
+    public function announcement_update(Request $request)
+    {
+        $request->validate([
+            'announcement_title' => 'required',
+            'announcement_description' => 'required',
+            'announcement_image' => 'required|image|max:300'
+        ]);
+        $single_announcement = Announcement::findOrFail($request->id);
+
+        $single_announcement->announcement_title = $request->announcement_title;
+        $single_announcement->announcement_description = $request->announcement_description;
+
+        if($request->hasfile('announcement_image')){
+            $destinaiton = 'Uploads/Announcement/'. $single_announcement->announcement_image;
+            if(File::exists($destinaiton)){
+                File::delete($destinaiton);
+            }
+            $file = $request->file('announcement_image');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('Uploads/Announcement/', $filename);
+            $single_announcement->announcement_image = $filename;
+        }
+        $single_announcement->update();
+        return redirect(route('announcements'))->with('status', 'Announcement Updated Successfully!');
+    }
+    //announcement delete
+    public function announcement_delete($id)
+    {
+        $single_announcement = Announcement::findOrFail($id);
+        $destination = 'Uploads/Announcement/'. $single_announcement->announcement_image;
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
+        $single_announcement->delete();
+        return redirect(route('announcements'))->with('status', 'Announcement Deleted!');
     }
 }
