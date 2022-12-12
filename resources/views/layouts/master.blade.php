@@ -123,7 +123,7 @@
           <ul class="nav nav-aside">
             
               <li class="nav-item active"><a href="https://ex-students-sghs.org/" class="nav-link"><span class="lang_en">Home</span></a></li>
-              <li class="nav-item active>"><a href="#" class="nav-link"><span class="lang_en">News/Announcements *</span></a></li>
+              <li class="nav-item active>"><a href="{{ route('news_announcement') }}" class="nav-link"><span class="lang_en">News/Announcements *</span></a></li>
               <li class="nav-item active"><a href="#" class="nav-link text-theme"><span class="lang_en">Events</span></a></li>
               <!-- <li class="nav-item active"><a href="#" class="nav-link text-theme"><span class="lang_en">Membership & Subscription</span></a></li> -->
               <li class="nav-item active"><a href="#" class="nav-link"><span class="lang_en">Gallery</span></a></li>

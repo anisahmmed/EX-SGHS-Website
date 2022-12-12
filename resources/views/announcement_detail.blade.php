@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    News/Announcement
+    Announcement Detail
 @endsection
 @section('content')
 <div class="container">
@@ -20,7 +20,7 @@
                 min-width: 150px;
                 max-width: 150px;
                 margin: 0 0 20px;
-                overflow: hidden;
+                /* overflow: hidden; */
             }
             .description{
                 margin-left: 20px;
@@ -41,24 +41,29 @@
             }
         </style>
         <div class="col-md-12 offset-md- col-12">
-            @forelse ($all_announcements as $item)
-            <div class="row card-item p-0 mg-b-10 d-flex align-items-center mg-l-0 mg-r-0">
+            {{-- <div class="row card-item p-0 mg-b-10 d-flex align-items-center mg-l-0 mg-r-0"> --}}
+                {{-- <div class="col-2 col-md-2 pd-5 d-flex justify-content-center align-items-center">
+                    <div class="pd-10 border rounded-circle bg-white tx-14 d-flex wd-60 ht-60 font-weight-bold justify-content-center align-items-center"><p class="h1 mg-b-0">{{ $sl++ }}</h3></div>
+                </div> --}}
+                
+                
+                    <div class="text-center">
+                        <img  class="" height="350px" width="500px" style="" src="{{ asset('Uploads/Announcement/'.$single_announcement-> announcement_image) }}" />
+
+                    </div><br><br>
                 
                 <div class="news">
-                    <div class="author">
-                        <img class="" height="200px" width="150px" style="" src="{{ asset('Uploads/Announcement/'.$item-> announcement_image) }}" />
-                    </div>
                     <div class="description">
-                        <Span class="font-weight-bold text-danger">Published Date: {{ date('d-m-Y', strtotime($item->created_at)); }}</Span>
-                        <a href="{{ url('/news-announcement-detail') }}/{{ $item->id }}"><h5>{{ Illuminate\Support\Str::limit($item->announcement_title, 46, '...see more') }}</h5></a>
-                        <a style="color: black;" href="{{ url('/news-announcement-detail') }}/{{ $item->id }}"><p>{{ Illuminate\Support\Str::limit($item->announcement_description, 70, '...see more') }}</p></a>
+                        <Span class="font-weight-bold text-danger">Published Date: {{ date('d-m-Y', strtotime($single_announcement->created_at)); }}</Span>
+                        <h3>{{ $single_announcement->announcement_title }}</h3>
+                        
+                        <p>{{ $single_announcement->announcement_description }}</p>
                     </div>
                 </div>
                 
-            </div>
-            @empty
-            <p class="font-weight-bold">We don't have any announcement right now.</p>
-            @endforelse
+            {{-- </div> --}}
+            
         </div>
     </div>
+    
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Announcement;
+use App\Models\MobileBanner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -28,7 +29,8 @@ class AdminController extends Controller
     public function banners()
     {
         $all_banner = Banner::all();
-        return view('Admin.banner.all_banner', compact('all_banner'));
+        $all_mobile_banner = MobileBanner::all();
+        return view('Admin.banner.all_banner', compact('all_banner','all_mobile_banner'));
     }
     //Banner submit
     public function banner_submit(Request $request)
@@ -91,6 +93,67 @@ class AdminController extends Controller
         return redirect(route('banners'))->with('status', 'Banner Deleted!');
     }
 
+    //Mobile banner input
+    public function mobile_banner(Request $request)
+    {
+        $request->validate([
+            'mobile_banner' => 'required|image',
+        ]);
+
+        $mobile_banners = new MobileBanner;
+
+        if($request->hasfile('mobile_banner')){
+            $file = $request->file('mobile_banner');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('Uploads/Banner/', $filename);
+            $mobile_banners->MobileBanner = $filename;
+        }
+        $mobile_banners->save();
+        return back()->with('status', 'New Mobile Banner added!');
+    }
+    //edit mobile banner
+    public function edit_mobile_banner($id)
+    {
+        $single_mobile_banner = MobileBanner::findOrFail($id);
+        return view('Admin.banner.edit_mobileBanner', compact('single_mobile_banner'));
+    }
+    //Update MobileBanner
+    public function update_MobileBanner(Request $request)
+    {
+        $request->validate([
+            'MobileBanner' => 'required|image'
+        ]);
+        $mobile_banners = MobileBanner::find($request->id);
+
+        if($request->hasfile('MobileBanner')){
+            $destinaiton = 'Uploads/Banner/'. $mobile_banners->MobileBanner;
+            if(File::exists($destinaiton)){
+                File::delete($destinaiton);
+            }
+            $file = $request->file('MobileBanner');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('Uploads/Banner/', $filename);
+            $mobile_banners->MobileBanner = $filename;
+        }
+        $mobile_banners->update();
+        return redirect(route('banners'))->with('status', 'Mobile Banner Updated Successfully!');
+    }
+    //MobileBanner Delete
+    public function mobileBanner_delete($id)
+    {
+        $single_mobileBanner = MobileBanner::findOrFail($id);
+        $destinaiton = 'Uploads/Banner/'. $single_mobileBanner->MobileBanner;
+            if(File::exists($destinaiton)){
+                File::delete($destinaiton);
+            }
+        $single_mobileBanner->delete();
+
+        return redirect(route('banners'))->with('status', 'Banner Deleted!');
+    }
+    
+
     //news announcement input form view
     public function announcement_input_form()
     {
@@ -134,9 +197,8 @@ class AdminController extends Controller
     public function announcement_update(Request $request)
     {
         $request->validate([
-            'announcement_title' => 'required',
-            'announcement_description' => 'required',
-            'announcement_image' => 'required|image|max:300'
+            
+            'announcement_image' => 'image|max:300'
         ]);
         $single_announcement = Announcement::findOrFail($request->id);
 
